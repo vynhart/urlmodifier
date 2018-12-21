@@ -19,12 +19,6 @@ func SubDomain(urls string) (string, error) {
 	return subdomain, err
 }
 
-func RandomizeSubDomain(urls string, subdomains []string) (string, error) {
-	subdomain := randomize(subdomains)
-
-	return ReplaceSubDomain(urls, subdomain)
-}
-
 func ReplaceSubDomain(urls string, subdomain string) (string, error) {
 	urlObj, err := url.Parse(urls)
 	if err != nil {
@@ -47,6 +41,12 @@ func ReplaceSubDomain(urls string, subdomain string) (string, error) {
 		urlObj.Host = host
 	}
 	return urlObj.String(), nil
+}
+
+func RandomizeSubDomain(urls string, subdomains []string) (string, error) {
+	subdomain := randomize(subdomains)
+
+	return ReplaceSubDomain(urls, subdomain)
 }
 
 func randomize(s []string) string {

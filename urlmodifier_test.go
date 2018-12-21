@@ -29,3 +29,31 @@ func TestReplaceSubDomain(t *testing.T) {
 		t.Errorf("Fail replacing subdomain. Expect: %v, Got: %v", expectValue, newUrl)
 	}
 }
+
+func TestRandomizeSubDomain(t *testing.T) {
+	var found bool
+
+	myUrl := "https://www.bukalapak.com/avt/7700597/medium/02420bf25da2677d984420e4c8479c61.jpg?go=true"
+	subDomains := []string{"s1", "s2", "s3"}
+	newUrl, err := RandomizeSubDomain(myUrl, subDomains)
+	if err != nil {
+		t.Errorf("Fail randomizing subdomain. Error: %v", err)
+	}
+
+	newUrls := []string{
+		"https://s1.bukalapak.com/avt/7700597/medium/02420bf25da2677d984420e4c8479c61.jpg?go=true",
+		"https://s2.bukalapak.com/avt/7700597/medium/02420bf25da2677d984420e4c8479c61.jpg?go=true",
+		"https://s3.bukalapak.com/avt/7700597/medium/02420bf25da2677d984420e4c8479c61.jpg?go=true",
+	}
+
+	for _, v := range newUrls {
+		if v == newUrl {
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		t.Error("Fail randomizing subdomain. Got: ", newUrl)
+	}
+}
