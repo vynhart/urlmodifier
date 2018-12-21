@@ -41,7 +41,11 @@ func ReplaceSubDomain(urls string, subdomain string) (string, error) {
 
 	domains[0] = subdomain
 	host = strings.Join(domains, ".")
-	urlObj.Host = fmt.Sprintf("%v:%v", host, port)
+	if port != "" {
+		urlObj.Host = fmt.Sprintf("%v:%v", host, port)
+	} else {
+		urlObj.Host = host
+	}
 	return urlObj.String(), nil
 }
 
