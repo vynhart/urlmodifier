@@ -57,3 +57,16 @@ func TestRandomizeSubDomain(t *testing.T) {
 		t.Error("Fail randomizing subdomain. Got: ", newUrl)
 	}
 }
+
+func TestReplacePathComponent(t *testing.T) {
+	myUrl := "https://s1.bukalapak.com/avt/7700597/medium/02420bf25da2677d984420e4c8479c61.jpg?go=true"
+	newUrl, err := ReplacePathComponent(myUrl, "small", 3)
+	if err != nil {
+		t.Error("ReplacePathComponent is Fail. Error: ", err)
+	}
+
+	expectValue := "https://s1.bukalapak.com/avt/7700597/small/02420bf25da2677d984420e4c8479c61.jpg?go=true"
+	if newUrl != expectValue {
+		t.Errorf("ReplacePathComponent is Fail. Expect: %v, Got: %v", expectValue, newUrl)
+	}
+}

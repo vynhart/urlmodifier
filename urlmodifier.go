@@ -49,6 +49,28 @@ func RandomizeSubDomain(urls string, subdomains []string) (string, error) {
 	return ReplaceSubDomain(urls, subdomain)
 }
 
+func ReplacePathComponent(urls string, component string, idx int) (string, error) {
+	if idx < 1 {
+		return urls, errors.New("index must greater than 0")
+	}
+
+	urlObj, err := url.Parse(urls)
+	if err != nil {
+		return urls, err
+	}
+
+	path := urlObj.Path
+	paths := strings.Split(path, "/")
+	if len(paths) <= idx {
+		return urls, errors.New("index exceeds length of path")
+	}
+
+	paths[idx] = component
+	urlObj.Path = strings.Join(paths, "/")
+
+	return urlObj.String(), nil
+}
+
 func randomize(s []string) string {
 	if len(s) < 2 {
 		return s[0]
